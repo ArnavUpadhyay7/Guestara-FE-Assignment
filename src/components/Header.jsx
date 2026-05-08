@@ -27,7 +27,7 @@ export default function Header({ currentMonth, onPrev, onNext, onToday }) {
           </svg>
         </button>
 
-        <div className="px-3 min-w-[148px] text-center">
+        <div className="px-3 min-w-37 text-center">
           <span className="text-sm font-semibold text-white tabular-nums">
             {MONTHS[currentMonth.getMonth()]} {currentMonth.getFullYear()}
           </span>

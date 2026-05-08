@@ -1,16 +1,154 @@
-# React + Vite
+# Guestara — Booking Calendar Heatmap
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive hotel occupancy heatmap calendar built with React, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+This project visualizes hotel bookings across a monthly calendar view, allowing users to quickly understand occupancy levels, inspect booking details, and select date ranges through drag interactions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Core Features
+- Month-view calendar grid
+- Occupancy heatmap visualization
+- Previous / Next / Today navigation
+- Drag-to-select date range
+- Booking detail side panel
+- Async loading from `bookings.json`
+- Loading + error states
 
-## Expanding the ESLint configuration
+### Open Scope Features
+- Filtering by booking status and room
+- Monthly statistics bar
+  - Average occupancy
+  - Total bookings
+  - Peak occupancy day
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Tech Stack
+
+- React
+- Vite
+- Tailwind CSS
+- date-fns
+
+
+## Project Structure
+
+```bash
+src/
+ ├── components/
+ │    ├── CalendarGrid.jsx
+ │    ├── DayCell.jsx
+ │    ├── HeatmapLegend.jsx
+ │    ├── BookingPanel.jsx
+ │    └── Header.jsx
+ │
+ ├── hooks/
+ │    ├── useCalendar.js
+ │    ├── useBookings.js
+ │
+ ├── utils/
+ │    ├── dateUtils.js
+ │    ├── bookingUtils.js
+ │
+ ├── App.jsx
+```
+
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone <repo-url>
+cd <repo-name>
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
+
+```bash
+npm run dev
+```
+
+### 4. Open in browser
+
+```txt
+http://localhost:5173
+```
+
+
+## Occupancy Logic
+
+A booking occupies nights using an inclusive-exclusive model:
+
+- `checkIn` → occupied
+- `checkOut` → not occupied
+
+Example:
+
+```txt
+checkIn: 2026-02-10
+checkOut: 2026-02-13
+```
+
+Occupied nights:
+- Feb 10
+- Feb 11
+- Feb 12
+
+Not occupied:
+- Feb 13
+
+Condition used:
+
+```js
+date >= checkIn && date < checkOut
+```
+
+Cancelled bookings are excluded from occupancy calculations.
+
+
+## Drag Selection
+
+Date range selection is implemented using native mouse events:
+- `onMouseDown`
+- `onMouseEnter`
+- `onMouseUp`
+
+The selection system:
+- Works in both directions
+- Supports cross-month dragging
+- Handles single-day selection
+
+
+## Design Goals
+
+The UI was designed to feel like a modern SaaS dashboard:
+- Minimal
+- High readability
+- Clear visual hierarchy
+- Subtle heatmap gradients
+- Smooth interactions
+
+
+## Future Improvements
+
+With more time, potential improvements would include:
+- Keyboard accessibility
+- Virtualized booking lists
+- Year-view heatmap
+- CSV export
+- Improved mobile responsiveness
+- Tooltip previews
+
+
+## Loom Walkthrough
+
+Loom link:
+
